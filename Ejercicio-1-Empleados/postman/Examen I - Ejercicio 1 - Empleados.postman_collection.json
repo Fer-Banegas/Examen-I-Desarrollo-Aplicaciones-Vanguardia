@@ -1,0 +1,106 @@
+{
+  "info": {
+    "name": "Examen I - Ejercicio 1 - Empleados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "empleadoId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Registrar empleado",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/empleados",
+        "description": "Respuesta esperada: 201 Created.",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Carlos Martínez\",\n  \"puesto\": \"Administrador\",\n  \"salario\": 18000,\n  \"activo\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const { id } = pm.response.json();",
+              "  if (Number.isInteger(id) && id > 0) {",
+              "    pm.collectionVariables.set('empleadoId', String(id));",
+              "  }",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Listar empleados",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/empleados",
+        "description": "Respuesta esperada: 200 OK."
+      }
+    },
+    {
+      "name": "03 - Consultar empleado por ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/empleados/{{empleadoId}}",
+        "description": "Respuesta esperada: 200 OK."
+      }
+    },
+    {
+      "name": "04 - Actualizar empleado",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/empleados/{{empleadoId}}",
+        "description": "Respuesta esperada: 200 OK.",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"puesto\": \"Gerente\",\n  \"salario\": 22000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "05 - Desactivar empleado",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/empleados/{{empleadoId}}",
+        "description": "Respuesta esperada: 200 OK con activo en false."
+      }
+    }
+  ]
+}

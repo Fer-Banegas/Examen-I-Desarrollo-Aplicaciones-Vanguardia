@@ -1,0 +1,77 @@
+{
+  "info": {
+    "name": "Examen I - Ejercicio 2 - Pedidos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Crear primer pedido pendiente",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/pedidos",
+        "description": "Respuesta esperada: 201 Created.",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clienteNombre\": \"Ana López\",\n  \"total\": 450,\n  \"estado\": \"pendiente\",\n  \"productos\": [\n    \"Cuaderno\",\n    \"Lápiz\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "02 - Crear segundo pedido enviado",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/pedidos",
+        "description": "Respuesta esperada: 201 Created.",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clienteNombre\": \"Carlos Martínez\",\n  \"total\": 780,\n  \"estado\": \"enviado\",\n  \"productos\": [\n    \"Mochila\",\n    \"Regla\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03 - Consultar todos los pedidos",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/pedidos",
+        "description": "Respuesta esperada: 200 OK con todos los pedidos."
+      }
+    },
+    {
+      "name": "04 - Consultar pedidos pendientes",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/pedidos/estado/pendiente",
+        "description": "Respuesta esperada: 200 OK con los pedidos pendientes."
+      }
+    }
+  ]
+}
